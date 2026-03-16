@@ -8,6 +8,7 @@ int main() {
   int n[10];
 
   for (int i = 0; i < 10; i++) {
+    cout << "Hi";
     n[i] = i + 100;
   }
 
