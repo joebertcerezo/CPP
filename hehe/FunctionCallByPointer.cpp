@@ -7,7 +7,6 @@ int main(){
   int *refPtr = ref;
   cout << ref << "\n";
   cout << &ref << "\n";
-  
   cout << refPtr << "\n";
   cout << *refPtr << "\n";
 
