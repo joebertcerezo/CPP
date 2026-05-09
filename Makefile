@@ -1,62 +1,128 @@
-# Makefile for C++ Practice Project
+#
+#  There exist several targets which are by default empty and which can be 
+#  used for execution of your targets. These targets are usually executed 
+#  before and after some main targets. They are: 
+#
+#     .build-pre:              called before 'build' target
+#     .build-post:             called after 'build' target
+#     .clean-pre:              called before 'clean' target
+#     .clean-post:             called after 'clean' target
+#     .clobber-pre:            called before 'clobber' target
+#     .clobber-post:           called after 'clobber' target
+#     .all-pre:                called before 'all' target
+#     .all-post:               called after 'all' target
+#     .help-pre:               called before 'help' target
+#     .help-post:              called after 'help' target
+#
+#  Targets beginning with '.' are not intended to be called on their own.
+#
+#  Main targets can be executed directly, and they are:
+#  
+#     build                    build a specific configuration
+#     clean                    remove built files from a configuration
+#     clobber                  remove all built files
+#     all                      build all configurations
+#     help                     print help mesage
+#  
+#  Targets .build-impl, .clean-impl, .clobber-impl, .all-impl, and
+#  .help-impl are implemented in nbproject/makefile-impl.mk.
+#
+#  Available make variables:
+#
+#     CND_BASEDIR                base directory for relative paths
+#     CND_DISTDIR                default top distribution directory (build artifacts)
+#     CND_BUILDDIR               default top build directory (object files, ...)
+#     CONF                       name of current configuration
+#     CND_PLATFORM_${CONF}       platform name (current configuration)
+#     CND_ARTIFACT_DIR_${CONF}   directory of build artifact (current configuration)
+#     CND_ARTIFACT_NAME_${CONF}  name of build artifact (current configuration)
+#     CND_ARTIFACT_PATH_${CONF}  path to build artifact (current configuration)
+#     CND_PACKAGE_DIR_${CONF}    directory of package (current configuration)
+#     CND_PACKAGE_NAME_${CONF}   name of package (current configuration)
+#     CND_PACKAGE_PATH_${CONF}   path to package (current configuration)
+#
+# NOCDDL
 
-# Compiler and flags
-CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -O2
-LDFLAGS =
 
-# Directories
-SRC_DIR = src
-BUILD_DIR = build
+# Environment 
+MKDIR=mkdir
+CP=cp
+CCADMIN=CCadmin
 
-# Source files
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
-EXECUTABLES = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%, $(SOURCES))
 
-# Special dependencies
-$(BUILD_DIR)/03_pointers_refs: $(SRC_DIR)/03_pointers_refs.cpp $(SRC_DIR)/maTry.cpp $(SRC_DIR)/maTry.h
+# build
+build: .build-post
 
-# Default target: build all executables
-all: $(EXECUTABLES)
+.build-pre:
+# Add your pre 'build' code here...
 
-# Rule to build executables
-$(BUILD_DIR)/%: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $< $(LDFLAGS) -o $@
+.build-post: .build-impl
+# Add your post 'build' code here...
 
-# Special rule for 03_pointers_refs (needs maTry.cpp)
-$(BUILD_DIR)/03_pointers_refs: $(SRC_DIR)/03_pointers_refs.cpp $(SRC_DIR)/maTry.cpp $(SRC_DIR)/maTry.h | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(SRC_DIR)/03_pointers_refs.cpp $(SRC_DIR)/maTry.cpp $(LDFLAGS) -o $@
 
-# Create build directory
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+# clean
+clean: .clean-post
 
-# Run specific program (usage: make run PROGRAM=name)
-run: $(BUILD_DIR)/$(PROGRAM)
-	./$(BUILD_DIR)/$(PROGRAM)
+.clean-pre:
+# Add your pre 'clean' code here...
 
-# Clean build artifacts
-clean:
-	rm -rf $(BUILD_DIR)
+.clean-post: .clean-impl
+# Add your post 'clean' code here...
 
-# Clean and rebuild
-rebuild: clean all
 
-# Format code using clang-format (assumes format.sh uses clang-format)
-format:
-	./format.sh
+# clobber
+clobber: .clobber-post
 
-# Help target
-help:
-	@echo "Available targets:"
-	@echo "  all       - Build all executables"
-	@echo "  clean     - Remove build artifacts"
-	@echo "  rebuild   - Clean and rebuild all"
-	@echo "  format    - Format code using format.sh"
-	@echo "  run       - Run specific program (usage: make run PROGRAM=name)"
-	@echo "  help      - Show this help"
-	@echo ""
-	@echo "Executables built:"
-	@echo "$(EXECUTABLES)"
+.clobber-pre:
+# Add your pre 'clobber' code here...
 
-.PHONY: all clean rebuild format run help
+.clobber-post: .clobber-impl
+# Add your post 'clobber' code here...
+
+
+# all
+all: .all-post
+
+.all-pre:
+# Add your pre 'all' code here...
+
+.all-post: .all-impl
+# Add your post 'all' code here...
+
+
+# build tests
+build-tests: .build-tests-post
+
+.build-tests-pre:
+# Add your pre 'build-tests' code here...
+
+.build-tests-post: .build-tests-impl
+# Add your post 'build-tests' code here...
+
+
+# run tests
+test: .test-post
+
+.test-pre: build-tests
+# Add your pre 'test' code here...
+
+.test-post: .test-impl
+# Add your post 'test' code here...
+
+
+# help
+help: .help-post
+
+.help-pre:
+# Add your pre 'help' code here...
+
+.help-post: .help-impl
+# Add your post 'help' code here...
+
+
+
+# include project implementation makefile
+include nbproject/Makefile-impl.mk
+
+# include project make variables
+include nbproject/Makefile-variables.mk
